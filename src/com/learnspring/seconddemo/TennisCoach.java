@@ -1,13 +1,44 @@
 package com.learnspring.seconddemo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component("thatSillyCoach")
+//@Component("thatSillyCoach") Removing to apply default Bean ID
+
+@Component
 public class TennisCoach implements Coach {
+	
+	private FortuneService fortuneService;
+	
+	// define a default constructor
+	public TennisCoach() {
+		System.out.println(">> TennisCoach: inside default constructor");
+	}
+	
+	
+//	@Autowired
+//	public TennisCoach(FortuneService theFortuneService) {
+//	fortuneService = theFortuneService;
+//	}
+	
+	
+	//define a setter method
+	@Autowired
+	public void setFortuneService(FortuneService fortuneService)
+	{
+		System.out.println(">> TennisCoach: inside setFortuneService() method");
+		this.fortuneService = fortuneService;
+	}
+	
 
 	@Override
 	public String getDailyWorkout() {
 		return "Pracice your backhand volley";
+	}
+
+	@Override
+	public String getDailyFortune() {	
+		return fortuneService.getFortune();
 	}
 
 }
